@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login – SDMS</title>
+  <meta name="description" content="Student login portal for SDMS." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="login-page">
+  <div class="login-left">
+    <div class="orb orb-1"></div><div class="orb orb-2"></div>
+    <div class="hero-grid-overlay"></div>
+    <div style="position:relative;z-index:1">
+      <a href="index.html" class="navbar-brand" style="margin-bottom:3rem;display:inline-flex"><div class="brand-logo">🎓</div><span class="brand-name" style="color:#fff">SD<span>MS</span></span></a>
+      <h1 style="font-family:'Outfit',sans-serif;font-size:2.4rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:1rem">Your Academic<br/><span class="text-gradient">Journey Matters</span></h1>
+      <p style="color:rgba(255,255,255,.65);font-size:1rem;line-height:1.7;margin-bottom:2.5rem">Access your personalized dashboard, track progress, discover scholarships, and connect with counselors.</p>
+      <div style="display:flex;flex-direction:column;gap:.75rem">
+        <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.75);font-size:.9rem"><span style="width:32px;height:32px;border-radius:8px;background:rgba(16,185,129,.2);display:flex;align-items:center;justify-content:center">📈</span> Real-time progress tracking</div>
+        <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.75);font-size:.9rem"><span style="width:32px;height:32px;border-radius:8px;background:rgba(14,165,233,.2);display:flex;align-items:center;justify-content:center">📚</span> Personalized study resources</div>
+        <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.75);font-size:.9rem"><span style="width:32px;height:32px;border-radius:8px;background:rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center">🤝</span> Counseling & mentoring</div>
+        <div style="display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.75);font-size:.9rem"><span style="width:32px;height:32px;border-radius:8px;background:rgba(139,92,246,.2);display:flex;align-items:center;justify-content:center">💰</span> Scholarship discovery</div>
+      </div>
+    </div>
+  </div>
+  <div class="login-right">
+    <div style="max-width:400px;width:100%;margin:0 auto">
+      <div style="margin-bottom:2rem">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(26,86,219,.08);border:1px solid rgba(26,86,219,.15);color:#1a56db;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:1rem">🎓 Student Portal</div>
+        <h2 style="font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:.4rem">Welcome back!</h2>
+        <p style="color:var(--text-muted);font-size:.9rem">Sign in to access your student dashboard.</p>
+      </div>
+      <div class="alert alert-info">ℹ️ <strong>Demo mode:</strong> Any credentials work without backend.</div>
+      <form id="login-form" data-role="student" novalidate>
+        <div class="form-group"><label class="form-label" for="name">Name</label><input class="form-input" type="text" id="name" placeholder="Enter your name" required /></div>
+        <div class="form-group"><label class="form-label" for="email">Email Address</label><input class="form-input" type="email" id="email" placeholder="you@school.edu" required /></div>
+        <div class="form-group"><label class="form-label" for="password">Password</label><div class="input-group"><input class="form-input" type="password" id="password" placeholder="Enter your password" required /><span class="input-icon toggle-password">👁️</span></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+          <label class="form-check"><input type="checkbox" /> Remember me</label>
+          <a href="#" style="font-size:.85rem;color:var(--primary);font-weight:500" onclick="SDMS.showToast('Password reset link sent (demo)','success');return false">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px">Sign In as Student</button>
+        <div class="divider">or</div>
+        <a href="admin_login.html" class="btn btn-outline" style="width:100%;justify-content:center">📊 Switch to Admin Login</a>
+      </form>
+      <p style="text-align:center;margin-top:1.5rem;font-size:.85rem;color:var(--text-muted)">Don't have an account? <a href="#" style="color:var(--primary);font-weight:600" onclick="SDMS.showToast('Contact your administrator','info');return false">Contact admin</a></p>
+      <div style="text-align:center;margin-top:2rem"><a href="index.html" style="font-size:.8rem;color:var(--text-muted)">← Back to Homepage</a></div>
+    </div>
+  </div>
+</div>
+<script src="main.js"></script>
+<script>
+if (window.SDMS?.Auth.isLogged() && window.SDMS?.Auth.getRole() === 'student') window.location.href = 'student_dashboard.html';
+</script>
+</body>
+</html>

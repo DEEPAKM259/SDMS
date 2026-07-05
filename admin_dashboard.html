@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard – SDMS</title>
+  <meta name="description" content="Admin dashboard for managing students, analytics, and reports." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="dashboard-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand"><div class="brand-logo">🎓</div><span class="brand-name" style="color:#fff">SD<span>MS</span></span></div>
+    <div style="margin:1rem;background:rgba(255,255,255,.06);border-radius:12px;padding:1rem;border:1px solid rgba(255,255,255,.08)">
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#1a56db);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.1rem" class="user-avatar">A</div>
+        <div><div style="font-weight:600;color:#fff;font-size:.9rem" class="user-name">Admin</div><div style="font-size:.72rem;color:rgba(255,255,255,.45)">Administrator</div></div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Dashboard</div>
+      <a class="sidebar-link" data-page="overview"><span class="link-icon">📊</span><span class="link-label">Overview</span></a>
+      <a class="sidebar-link" data-page="students"><span class="link-icon">👥</span><span class="link-label">Students</span></a>
+      <a class="sidebar-link" data-page="analytics"><span class="link-icon">📈</span><span class="link-label">Analytics</span></a>
+      <div class="nav-section-label">Management</div>
+      <a class="sidebar-link" data-page="reports"><span class="link-icon">📤</span><span class="link-label">Upload Reports</span></a>
+      <a class="sidebar-link" data-page="causes"><span class="link-icon">🔍</span><span class="link-label">Dropout Causes</span></a>
+      <div class="nav-section-label">System</div>
+      <a class="sidebar-link" data-page="add-student"><span class="link-icon">➕</span><span class="link-label">Add Student</span></a>
+      <a class="sidebar-link" data-page="settings"><span class="link-icon">⚙️</span><span class="link-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-footer"><button class="sidebar-link" data-logout style="width:100%;color:#ef4444"><span class="link-icon">🚪</span><span class="link-label">Logout</span></button></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button class="btn" id="sidebar-toggle" style="padding:8px;border:1px solid var(--border);border-radius:8px">☰</button>
+        <div><div class="topbar-title" id="page-title">Overview</div><div style="font-size:.75rem;color:var(--text-muted)">Admin Control Panel</div></div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-primary btn-sm" onclick="document.querySelector('[data-page=reports]').click()">📤 Upload</button>
+        <div class="topbar-avatar user-avatar">A</div>
+      </div>
+    </header>
+
+    <!-- OVERVIEW -->
+    <main class="dash-page" id="page-overview">
+      <div class="widget-grid-4">
+        <div class="widget stat-widget"><div class="stat-icon" style="background:rgba(26,86,219,.1)">👥</div><div class="stat-info"><div class="num" id="overview-student-count" style="color:var(--primary)">0</div><div class="lbl">Students Count</div><div class="change change-up">📋 Live list</div></div></div>
+        <div class="widget stat-widget"><div class="stat-icon" style="background:rgba(245,158,11,.1)">⚠️</div><div class="stat-info"><div class="num" id="overview-risk-count" style="color:#f59e0b">0</div><div class="lbl">At Risk</div><div class="change change-up">⚠️ Exact count</div></div></div>
+      </div>
+      <div class="widget"><div class="widget-header"><span class="widget-title">📊 Students by Stage</span><span class="widget-badge" style="background:rgba(26,86,219,.1);color:var(--primary)">2024</span></div><div style="height:260px"><canvas id="chart-admin-overview"></canvas></div></div>
+    </main>
+
+    <!-- STUDENTS -->
+    <main class="dash-page" id="page-students">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+        <h2 style="font-size:1.5rem;font-weight:800">👥 Student Records</h2>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <input class="form-input" type="search" placeholder="Search…" id="student-search" style="width:220px" />
+          <select class="form-input" id="filter-status" style="width:150px"><option value="">All Status</option><option value="active">Active</option><option value="at-risk">At Risk</option><option value="dropout">Dropout</option></select>
+          <button class="btn btn-primary btn-sm" onclick="document.querySelector('[data-page=add-student]').click()">+ Add</button>
+        </div>
+      </div>
+      <div class="widget" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="data-table" id="students-table"><thead><tr><th>ID</th><th>Name</th><th>Stage</th><th>Class</th><th>Att.</th><th>Grade</th><th>Status</th><th>Actions</th></tr></thead><tbody id="students-tbody"></tbody></table></div></div>
+    </main>
+
+    <!-- ANALYTICS -->
+    <main class="dash-page" id="page-analytics">
+      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1.5rem">📈 Dropout Analytics</h2>
+      <div class="widget-grid-2">
+        <div class="widget"><div class="widget-header"><span class="widget-title">Yearly Trend</span></div><div style="height:280px"><canvas id="chart-yearly-trend-admin"></canvas></div></div>
+        <div class="widget"><div class="widget-header"><span class="widget-title">Causes</span></div><div style="height:280px"><canvas id="chart-causes-admin"></canvas></div></div>
+      </div>
+      <div class="widget" style="margin-top:1.5rem"><div class="widget-header"><span class="widget-title">Rate by Stage</span></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem">
+        <div style="text-align:center;padding:1.5rem;background:rgba(16,185,129,.06);border-radius:12px;border:1px solid rgba(16,185,129,.15)"><div style="font-size:2rem;font-weight:900;color:#10b981;font-family:'Outfit',sans-serif">8.2%</div><div style="font-weight:600;font-size:.9rem">Primary</div><div style="font-size:.75rem;color:var(--text-muted)">↓32% / 5yr</div></div>
+        <div style="text-align:center;padding:1.5rem;background:rgba(245,158,11,.06);border-radius:12px;border:1px solid rgba(245,158,11,.15)"><div style="font-size:2rem;font-weight:900;color:#f59e0b;font-family:'Outfit',sans-serif">16.7%</div><div style="font-weight:600;font-size:.9rem">Secondary</div><div style="font-size:.75rem;color:var(--text-muted)">↓25% / 5yr</div></div>
+        <div style="text-align:center;padding:1.5rem;background:rgba(239,68,68,.06);border-radius:12px;border:1px solid rgba(239,68,68,.15)"><div style="font-size:2rem;font-weight:900;color:#ef4444;font-family:'Outfit',sans-serif">22.4%</div><div style="font-weight:600;font-size:.9rem">Higher Sec.</div><div style="font-size:.75rem;color:var(--text-muted)">↓22% / 5yr</div></div>
+        <div style="text-align:center;padding:1.5rem;background:rgba(139,92,246,.06);border-radius:12px;border:1px solid rgba(139,92,246,.15)"><div style="font-size:2rem;font-weight:900;color:#8b5cf6;font-family:'Outfit',sans-serif">14.1%</div><div style="font-weight:600;font-size:.9rem">Higher Edu.</div><div style="font-size:.75rem;color:var(--text-muted)">↓23% / 5yr</div></div>
+      </div></div>
+    </main>
+
+    <!-- UPLOAD REPORTS -->
+    <main class="dash-page" id="page-reports">
+      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1.5rem">📤 Upload Reports to Google Cloud</h2>
+      <div class="widget-grid-2">
+        <div class="widget"><div class="widget-header"><span class="widget-title">Upload New File</span></div>
+          <div class="upload-zone"><div style="font-size:3rem">☁️</div><div style="font-weight:600;margin:.5rem 0">Drag & drop files here</div><div style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem">PDF, DOCX, XLSX, CSV · Max 50 MB</div><button class="btn btn-primary btn-sm">Browse Files</button></div>
+          <div class="form-group" style="margin-top:1.5rem"><label class="form-label">Category</label><select class="form-input"><option>Dropout Analysis</option><option>Stage Statistics</option><option>Intervention Report</option><option>Student Data</option></select></div>
+          <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" rows="2" placeholder="Brief description…"></textarea></div>
+        </div>
+        <div class="widget"><div class="widget-header"><span class="widget-title">📁 Cloud Files</span><span class="widget-badge" style="background:rgba(26,86,219,.1);color:var(--primary)">GCS</span></div><div style="display:flex;flex-direction:column;gap:.75rem">
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.75rem;border-radius:10px;background:var(--bg)"><span style="font-size:1.5rem">📄</span><div style="flex:1"><div style="font-weight:600;font-size:.88rem">Q2_Dropout_Analysis.pdf</div><div style="font-size:.75rem;color:var(--text-muted)">2.4 MB · 01 Jul 2024</div></div><button class="btn btn-outline btn-sm" onclick="SDMS.showToast('Downloading…','info')">Download</button></div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.75rem;border-radius:10px;background:var(--bg)"><span style="font-size:1.5rem">📊</span><div style="flex:1"><div style="font-weight:600;font-size:.88rem">Primary_Report_Jun24.xlsx</div><div style="font-size:.75rem;color:var(--text-muted)">890 KB · 28 Jun 2024</div></div><button class="btn btn-outline btn-sm" onclick="SDMS.showToast('Downloading…','info')">Download</button></div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding:.75rem;border-radius:10px;background:var(--bg)"><span style="font-size:1.5rem">📋</span><div style="flex:1"><div style="font-weight:600;font-size:.88rem">At_Risk_List.csv</div><div style="font-size:.75rem;color:var(--text-muted)">145 KB · 25 Jun 2024</div></div><button class="btn btn-outline btn-sm" onclick="SDMS.showToast('Downloading…','info')">Download</button></div>
+        </div>
+        <div style="margin-top:1rem;padding:.75rem;background:rgba(26,86,219,.06);border-radius:10px;border:1px solid rgba(26,86,219,.1)"><div style="font-size:.8rem;color:var(--primary);font-weight:600">☁️ Google Cloud Storage</div><div style="font-size:.75rem;color:var(--text-muted);margin-top:2px">Bucket: sdms-reports-prod · asia-south1</div></div></div>
+      </div>
+    </main>
+
+    <!-- CAUSES -->
+    <main class="dash-page" id="page-causes">
+      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1.5rem">🔍 Dropout Causes</h2>
+      <div class="widget-grid-2">
+        <div class="widget"><div class="widget-header"><span class="widget-title">Distribution</span></div><div style="height:300px"><canvas id="chart-causes-page"></canvas></div></div>
+        <div class="widget"><div class="widget-header"><span class="widget-title">By Stage</span></div><table class="data-table"><thead><tr><th>Cause</th><th>Prim.</th><th>Sec.</th><th>H.Sec</th><th>H.Edu</th></tr></thead><tbody><tr><td>Financial</td><td>42%</td><td>36%</td><td>28%</td><td>30%</td></tr><tr><td>Family</td><td>30%</td><td>24%</td><td>18%</td><td>12%</td></tr><tr><td>Academic</td><td>10%</td><td>20%</td><td>25%</td><td>22%</td></tr><tr><td>Social</td><td>8%</td><td>12%</td><td>14%</td><td>16%</td></tr><tr><td>Health</td><td>6%</td><td>5%</td><td>9%</td><td>12%</td></tr><tr><td>Other</td><td>4%</td><td>3%</td><td>6%</td><td>8%</td></tr></tbody></table></div>
+      </div>
+    </main>
+
+    <!-- ADD STUDENT -->
+    <main class="dash-page" id="page-add-student">
+      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1.5rem">➕ Add New Student</h2>
+      <div class="widget" style="max-width:700px">
+        <form id="add-student-form"><div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" id="s-name" required placeholder="Name" /></div>
+          <div class="form-group"><label class="form-label">Date of Birth *</label><input class="form-input" type="date" id="s-dob" required /></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="s-email" placeholder="student@school.edu" /></div>
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="s-phone" placeholder="+91 98765 43210" /></div>
+          <div class="form-group"><label class="form-label">Stage *</label><select class="form-input" id="s-stage" required><option value="">Select</option><option>Primary</option><option>Secondary</option><option>Higher Secondary</option><option>Higher Education</option></select></div>
+          <div class="form-group"><label class="form-label">Class *</label><input class="form-input" id="s-class" required placeholder="e.g. 11-A" /></div>
+          <div class="form-group"><label class="form-label">School *</label><input class="form-input" id="s-school" required placeholder="School name" /></div>
+          <div class="form-group"><label class="form-label">Guardian</label><input class="form-input" id="s-guardian" placeholder="+91 91234 56789" /></div>
+        </div>
+        <div class="form-group"><label class="form-label">Address</label><textarea class="form-input" id="s-address" rows="2" placeholder="Full address…"></textarea></div>
+        <div style="display:flex;gap:1rem"><button type="submit" class="btn btn-primary">Add Student</button><button type="button" class="btn btn-outline" onclick="document.querySelector('[data-page=students]').click()">Cancel</button></div>
+        </form>
+      </div>
+    </main>
+
+    <!-- SETTINGS -->
+    <main class="dash-page" id="page-settings">
+      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1.5rem">⚙️ Settings</h2>
+      <div class="widget-grid-2">
+        <div class="widget"><div class="widget-header"><span class="widget-title">Thresholds</span></div>
+          <div class="form-group"><label class="form-label">Attendance Alert (%)</label><input class="form-input" type="number" value="85" /></div>
+          <div class="form-group"><label class="form-label">Grade Alert (%)</label><input class="form-input" type="number" value="50" /></div>
+          <div class="form-group"><label class="form-label">Consecutive Absences</label><input class="form-input" type="number" value="3" /></div>
+          <button class="btn btn-primary btn-sm" onclick="SDMS.showToast('Saved!','success')">Save</button>
+        </div>
+        <div class="widget"><div class="widget-header"><span class="widget-title">Google Cloud Storage</span></div>
+          <div class="form-group"><label class="form-label">Bucket</label><input class="form-input" value="sdms-reports-prod" readonly style="background:var(--bg)" /></div>
+          <div class="form-group"><label class="form-label">Region</label><input class="form-input" value="asia-south1" readonly style="background:var(--bg)" /></div>
+          <div class="form-group"><label class="form-label">Service Key</label><input class="form-input" type="password" value="xxxxxxxxxxxx" readonly style="background:var(--bg)" /></div>
+          <div class="alert alert-success">☁️ GCS connection active</div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Edit Student Modal -->
+<div class="modal-overlay" id="edit-student-modal"><div class="modal" style="max-width:720px"><div class="modal-header"><h3 class="modal-title">Edit Student</h3><button class="modal-close">✕</button></div>
+  <form id="edit-student-form">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" id="edit-student-name" required /></div>
+      <div class="form-group"><label class="form-label">Class *</label><input class="form-input" id="edit-student-class" required /></div>
+      <div class="form-group"><label class="form-label">Stage *</label><select class="form-input" id="edit-student-stage" required><option>Primary</option><option>Secondary</option><option>Higher Secondary</option><option>Higher Education</option></select></div>
+      <div class="form-group"><label class="form-label">Status</label><select class="form-input" id="edit-student-status"><option value="active">Active</option><option value="at-risk">At Risk</option><option value="dropout">Dropout</option></select></div>
+      <div class="form-group"><label class="form-label">Attendance (%)</label><input class="form-input" id="edit-student-attendance" type="number" min="0" max="100" /></div>
+      <div class="form-group"><label class="form-label">Grade</label><input class="form-input" id="edit-student-grade" /></div>
+    </div>
+    <div style="margin-top:1rem">
+      <div class="widget-header" style="margin-bottom:.75rem"><span class="widget-title">Subject-wise Marks</span></div>
+      <div id="subject-mark-fields" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem"></div>
+    </div>
+    <div style="display:flex;gap:1rem;margin-top:1.25rem"><button type="submit" class="btn btn-primary">Save Changes</button><button type="button" class="btn btn-outline" onclick="SDMS.closeModal('edit-student-modal')">Cancel</button></div>
+  </form>
+</div></div>
+
+<!-- Intervention Modal -->
+<div class="modal-overlay" id="new-int-modal"><div class="modal"><div class="modal-header"><h3 class="modal-title">New Intervention</h3><button class="modal-close">✕</button></div>
+  <div class="form-group"><label class="form-label">Student</label><input class="form-input" placeholder="Student name" /></div>
+  <div class="form-group"><label class="form-label">Type</label><select class="form-input"><option>Academic</option><option>Financial</option><option>Counseling</option><option>Mental Health</option><option>Peer Mentoring</option></select></div>
+  <div class="form-group"><label class="form-label">Assign To</label><select class="form-input"><option>Priya Sharma</option><option>Rajesh Kumar</option><option>Anita Mehta</option></select></div>
+  <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="SDMS.showToast('Intervention created!','success');SDMS.closeModal('new-int-modal')">Create</button>
+</div></div>
+
+<script src="main.js"></script>
+<script src="chart.js"></script>
+<script>
+let STUDENTS = [];
+let editingStudent = null;
+function getStoredStudents(){
+  const students = window.SDMS?.getStudents?.() || [];
+  STUDENTS = students;
+  return students;
+}
+function updateOverviewStats(){
+  const students = getStoredStudents();
+  const overviewCount = document.getElementById('overview-student-count');
+  const riskCount = document.getElementById('overview-risk-count');
+  if (overviewCount) overviewCount.textContent = students.length.toString();
+  if (riskCount) riskCount.textContent = students.filter(s => String(s.status || '').toLowerCase() === 'at-risk').length.toString();
+}
+function renderSubjectFields(stage = ''){
+  const container = document.getElementById('subject-mark-fields');
+  if (!container) return;
+  const subjects = window.SDMS?.getSubjectOptions?.(stage) || [];
+  container.innerHTML = subjects.map(subject => '<div class="form-group"><label class="form-label">' + subject.label + '</label><input class="form-input" id="subject-' + subject.key + '" type="number" min="0" max="100" /></div>').join('');
+}
+function populateSubjectFields(student){
+  const stageInput = document.getElementById('edit-student-stage');
+  const stage = (stageInput?.value || student?.stage || '').trim();
+  renderSubjectFields(stage);
+  const marks = student?.marks || {};
+  const subjects = window.SDMS?.getSubjectOptions?.(stage) || [];
+  subjects.forEach(subject => {
+    const input = document.getElementById('subject-' + subject.key);
+    if (input) input.value = marks[subject.key] ?? '';
+  });
+}
+function openEditStudentModal(student){
+  editingStudent = student;
+  document.getElementById('edit-student-name').value = student.name || '';
+  document.getElementById('edit-student-class').value = student.cls || '';
+  document.getElementById('edit-student-stage').value = student.stage || '';
+  document.getElementById('edit-student-status').value = student.status || 'active';
+  document.getElementById('edit-student-attendance').value = student.att ? student.att.replace('%','') : '';
+  document.getElementById('edit-student-grade').value = student.grade || '';
+  populateSubjectFields(student);
+  SDMS.openModal('edit-student-modal');
+}
+function renderTable(data){
+  const tb=document.getElementById('students-tbody'); if(!tb) return;
+  tb.innerHTML=data.map(s=>'<tr><td>'+s.id+'</td><td><strong>'+s.name+'</strong></td><td>'+s.stage+'</td><td>'+s.cls+'</td><td>'+s.att+'</td><td>'+s.grade+'</td><td><span class="status-badge status-'+(s.status||'active')+'">'+((s.status||'active').replace('-',' '))+'</span></td><td><button class="btn btn-sm btn-outline" onclick="SDMS.showToast(\'Viewing '+s.name+'\',\'info\')">View</button> <button class="btn btn-sm btn-primary edit-student-btn" data-student-id="'+s.id+'">Act</button></td></tr>').join('');
+  tb.querySelectorAll('.edit-student-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const student = getStoredStudents().find(item=>item.id===btn.dataset.studentId);
+      if(student) openEditStudentModal(student);
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  updateOverviewStats();
+  renderSubjectFields('');
+  renderTable(getStoredStudents());
+  document.getElementById('student-search')?.addEventListener('input',function(){const q=this.value.toLowerCase();renderTable(getStoredStudents().filter(s=>s.name.toLowerCase().includes(q)||s.stage.toLowerCase().includes(q)));});
+  document.getElementById('filter-status')?.addEventListener('change',function(){renderTable(this.value?getStoredStudents().filter(s=>s.status===this.value):getStoredStudents());});
+  document.getElementById('edit-student-stage')?.addEventListener('change',function(){populateSubjectFields(editingStudent);});
+  document.getElementById('add-student-form')?.addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('s-name').value.trim();if(!n){SDMS.showToast('Name required','error');return;}const students=getStoredStudents();students.push({id:'SDMS-' + String(students.length + 1).padStart(3,'0'),name:n,stage:document.getElementById('s-stage').value || 'Primary',cls:document.getElementById('s-class').value.trim() || 'New',att:'85%',grade:'B',status:'active',email:document.getElementById('s-email').value.trim(),marks:{}});window.SDMS?.saveStudents?.(students);STUDENTS=students;updateOverviewStats();renderTable(students);SDMS.showToast('"'+n+'" added!','success');e.target.reset();document.querySelector('[data-page=students]').click();});
+  document.getElementById('edit-student-form')?.addEventListener('submit',e=>{e.preventDefault();if(!editingStudent){SDMS.showToast('No student selected','error');return;}const students=getStoredStudents();const index=students.findIndex(item=>item.id===editingStudent.id);if(index<0){SDMS.showToast('Student not found','error');return;}const updated={...editingStudent,name:document.getElementById('edit-student-name').value.trim(),cls:document.getElementById('edit-student-class').value.trim(),stage:document.getElementById('edit-student-stage').value,status:document.getElementById('edit-student-status').value,att:document.getElementById('edit-student-attendance').value.trim()?document.getElementById('edit-student-attendance').value.trim()+'%':'',grade:document.getElementById('edit-student-grade').value.trim(),marks:{}};const subjects=window.SDMS?.getSubjectOptions?.(updated.stage) || [];subjects.forEach(subject=>{updated.marks[subject.key]=document.getElementById('subject-' + subject.key)?.value.trim();});students[index]=updated;window.SDMS?.saveStudents?.(students);STUDENTS=students;editingStudent=updated;updateOverviewStats();renderTable(students);SDMS.closeModal('edit-student-modal');SDMS.showToast('Student updated','success');});
+  if(window.SDMS_CHARTS){
+    SDMS_CHARTS.renderYearlyTrendChart('chart-yearly-trend-admin');
+    SDMS_CHARTS.renderCausesChart('chart-causes-admin');
+    SDMS_CHARTS.renderCausesChart('chart-causes-page');
+  }
+  document.getElementById('sidebar-toggle').style.display='flex';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDMS – Student Dropout Management System</title>
+  <meta name="description" content="Reducing student dropout rates across Primary, Secondary, Higher Secondary and Higher Education through data-driven technology." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a class="navbar-brand" href="index.html">
+      <div class="brand-logo">🎓</div>
+      <span class="brand-name">SD<span>MS</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="nav-link" href="#stages">Stages</a></li>
+      <li><a class="nav-link" href="#solutions">Solutions</a></li>
+      <li><a class="nav-link" href="#login">Portals</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="student_login.html">Student Login</a>
+      <a class="btn btn-primary btn-sm" href="admin_login.html">Admin Login</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div class="navbar-brand"><div class="brand-logo">🎓</div><span class="brand-name" style="color:#fff">SD<span>MS</span></span></div>
+    <button class="modal-close" id="mobile-nav-close">✕</button>
+  </div>
+  <nav class="mobile-nav-links">
+    <a class="mobile-nav-link" href="#stages" onclick="document.getElementById('mobile-nav').classList.remove('open')">Stages</a>
+    <a class="mobile-nav-link" href="#solutions" onclick="document.getElementById('mobile-nav').classList.remove('open')">Solutions</a>
+    <a class="mobile-nav-link" href="student_login.html">Student Login</a>
+    <a class="mobile-nav-link" href="admin_login.html">Admin Login</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-visual">
+    <div class="dashboard-preview">
+      <div class="dp-header"><div class="dp-dots"><div class="dp-dot dp-dot-1"></div><div class="dp-dot dp-dot-2"></div><div class="dp-dot dp-dot-3"></div></div><span class="dp-title">SDMS Analytics</span></div>
+      <div class="dp-stat-row">
+        <div class="dp-stat-box"><div class="num">12.4k</div><div class="lbl">Students</div></div>
+        <div class="dp-stat-box"><div class="num">↓8.2%</div><div class="lbl">Dropout</div></div>
+        <div class="dp-stat-box"><div class="num">94%</div><div class="lbl">Retained</div></div>
+      </div>
+      <div class="dp-chart-area"><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div><div class="dp-bar"></div></div>
+    </div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-eyebrow">🚀 Powered by AI · Data Analytics · Early Intervention</div>
+    <h1 class="hero-title">Reducing Dropout Rates<br/><span class="text-gradient">Through Technology</span></h1>
+    <p class="hero-desc">SDMS is India's comprehensive student retention platform — combining real-time analytics, counseling, and actionable insights to keep every student in school, from Primary to Higher Education.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="student_login.html">🎓 Student Portal</a>
+      <a class="btn btn-ghost btn-lg" href="admin_login.html">📊 Admin / Mentor Portal</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num count-up" data-target="2.6" data-suffix="M+" data-decimals="1">0</span><span class="hero-stat-label">Students Tracked</span></div>
+      <div class="hero-stat"><span class="hero-stat-num count-up" data-target="340" data-suffix="+" data-decimals="0">0</span><span class="hero-stat-label">Schools & Colleges</span></div>
+      <div class="hero-stat"><span class="hero-stat-num count-up" data-target="38" data-suffix="%" data-decimals="0">0</span><span class="hero-stat-label">Dropout Reduction</span></div>
+      <div class="hero-stat"><span class="hero-stat-num count-up" data-target="94" data-suffix="%" data-decimals="0">0</span><span class="hero-stat-label">Retention Rate</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STAGES -->
+<section class="stages-section" id="stages">
+  <div class="container">
+    <div class="stages-header">
+      <div class="section-label">Education Stages</div>
+      <h2 class="section-title">Understanding Dropout <span class="text-gradient">Across Stages</span></h2>
+      <p class="section-subtitle">Each education stage has unique challenges. Explore the data, causes, and solutions.</p>
+    </div>
+    <div class="stage-tabs">
+      <button class="stage-tab active" data-tab="primary">🏫 Primary</button>
+      <button class="stage-tab" data-tab="secondary">📚 Secondary</button>
+      <button class="stage-tab" data-tab="higher-sec">🏛️ Higher Secondary</button>
+      <button class="stage-tab" data-tab="higher-edu">🎓 Higher Education</button>
+    </div>
+
+    <!-- Primary -->
+    <div class="stage-panel active" id="panel-primary">
+      <div class="stage-content-grid">
+        <div class="stage-info">
+          <div class="stage-info-card fade-up">
+            <div class="stage-badge" style="background:rgba(16,185,129,.1);color:#059669">🏫 Primary · Classes 1–8</div>
+            <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.5rem">Dropout Rate: <span style="color:#10b981">8.2%</span></h3>
+            <p style="font-size:.9rem;color:var(--text-muted)">Approximately 4.2 million primary students drop out annually.</p>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">⚠️ Root Causes</h4>
+            <div class="causes-list">
+              <div class="cause-item">Extreme poverty — families need children to work</div>
+              <div class="cause-item">Lack of nearby schools in rural areas</div>
+              <div class="cause-item">Child marriage and gender discrimination</div>
+              <div class="cause-item">Poor sanitation facilities (especially for girls)</div>
+              <div class="cause-item">Low parental awareness of education importance</div>
+            </div>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">✅ Solutions</h4>
+            <div class="solutions-list">
+              <div class="solution-item"><span class="solution-icon">✅</span> Mid-day meal programs to incentivize attendance</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Free uniforms, books, and bicycles for girls</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Community awareness campaigns for parents</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Bridge schools and mobile classrooms</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Real-time attendance tracking via SDMS</div>
+            </div>
+          </div>
+        </div>
+        <div class="stage-chart-container fade-up">
+          <h3>📉 Primary Dropout Trend (2019–2024)</h3>
+          <div style="height:280px"><canvas id="chart-primary"></canvas></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+            <div style="background:rgba(16,185,129,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(16,185,129,.15)"><div style="font-size:1.8rem;font-weight:900;color:#10b981">8.2%</div><div style="font-size:.78rem;color:var(--text-muted)">Current Rate</div></div>
+            <div style="background:rgba(26,86,219,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(26,86,219,.15)"><div style="font-size:1.8rem;font-weight:900;color:#1a56db">↓32%</div><div style="font-size:.78rem;color:var(--text-muted)">5-Year Reduction</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary -->
+    <div class="stage-panel" id="panel-secondary">
+      <div class="stage-content-grid">
+        <div class="stage-info">
+          <div class="stage-info-card fade-up">
+            <div class="stage-badge" style="background:rgba(245,158,11,.1);color:#d97706">📚 Secondary · Classes 9–10</div>
+            <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.5rem">Dropout Rate: <span style="color:#f59e0b">16.7%</span></h3>
+            <p style="font-size:.9rem;color:var(--text-muted)">Board exams are a critical dropout point. Nearly 1 in 6 don't complete this stage.</p>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">⚠️ Root Causes</h4>
+            <div class="causes-list">
+              <div class="cause-item">Academic pressure and board exam fear</div>
+              <div class="cause-item">Early marriage especially among girls</div>
+              <div class="cause-item">Economic hardship driving child labor</div>
+              <div class="cause-item">Lack of career guidance and counseling</div>
+              <div class="cause-item">Peer pressure and substance misuse</div>
+            </div>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">✅ Solutions</h4>
+            <div class="solutions-list">
+              <div class="solution-item"><span class="solution-icon">✅</span> Regular psychosocial support and counseling</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Pre-board preparatory programs</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Conditional cash transfers for attendance</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Anti-child marriage enforcement</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Career counseling and vocational awareness</div>
+            </div>
+          </div>
+        </div>
+        <div class="stage-chart-container fade-up">
+          <h3>📉 Secondary Dropout Trend (2019–2024)</h3>
+          <div style="height:280px"><canvas id="chart-secondary"></canvas></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+            <div style="background:rgba(245,158,11,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(245,158,11,.15)"><div style="font-size:1.8rem;font-weight:900;color:#f59e0b">16.7%</div><div style="font-size:.78rem;color:var(--text-muted)">Current Rate</div></div>
+            <div style="background:rgba(26,86,219,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(26,86,219,.15)"><div style="font-size:1.8rem;font-weight:900;color:#1a56db">↓25%</div><div style="font-size:.78rem;color:var(--text-muted)">5-Year Reduction</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Higher Secondary -->
+    <div class="stage-panel" id="panel-higher-sec">
+      <div class="stage-content-grid">
+        <div class="stage-info">
+          <div class="stage-info-card fade-up">
+            <div class="stage-badge" style="background:rgba(239,68,68,.1);color:#dc2626">🏛️ Higher Secondary · Classes 11–12</div>
+            <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.5rem">Dropout Rate: <span style="color:#ef4444">22.4%</span></h3>
+            <p style="font-size:.9rem;color:var(--text-muted)">Highest dropout rate. Transition from compulsory to voluntary schooling is critical.</p>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">⚠️ Root Causes</h4>
+            <div class="causes-list">
+              <div class="cause-item">Stream selection anxiety and academic mismatch</div>
+              <div class="cause-item">Higher fees and coaching costs</div>
+              <div class="cause-item">Migration for economic opportunities</div>
+              <div class="cause-item">Mental health issues and burnout</div>
+              <div class="cause-item">Lack of interest in curriculum</div>
+            </div>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">✅ Solutions</h4>
+            <div class="solutions-list">
+              <div class="solution-item"><span class="solution-icon">✅</span> Free coaching and digital learning resources</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Mental health helpline and counseling</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Flexible stream-switching policy</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Merit cum means scholarships</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Industry tie-ups for practical exposure</div>
+            </div>
+          </div>
+        </div>
+        <div class="stage-chart-container fade-up">
+          <h3>📉 Higher Secondary Dropout Trend (2019–2024)</h3>
+          <div style="height:280px"><canvas id="chart-higher-sec"></canvas></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+            <div style="background:rgba(239,68,68,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(239,68,68,.15)"><div style="font-size:1.8rem;font-weight:900;color:#ef4444">22.4%</div><div style="font-size:.78rem;color:var(--text-muted)">Current Rate</div></div>
+            <div style="background:rgba(26,86,219,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(26,86,219,.15)"><div style="font-size:1.8rem;font-weight:900;color:#1a56db">↓22%</div><div style="font-size:.78rem;color:var(--text-muted)">5-Year Reduction</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Higher Education -->
+    <div class="stage-panel" id="panel-higher-edu">
+      <div class="stage-content-grid">
+        <div class="stage-info">
+          <div class="stage-info-card fade-up">
+            <div class="stage-badge" style="background:rgba(139,92,246,.1);color:#7c3aed">🎓 Higher Education · UG / PG / PhD</div>
+            <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:.5rem">Dropout Rate: <span style="color:#8b5cf6">14.1%</span></h3>
+            <p style="font-size:.9rem;color:var(--text-muted)">College dropouts represent significant loss of skilled talent.</p>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">⚠️ Root Causes</h4>
+            <div class="causes-list">
+              <div class="cause-item">Student loan burden and fee hikes</div>
+              <div class="cause-item">Inadequate campus support systems</div>
+              <div class="cause-item">Job offers disrupting studies</div>
+              <div class="cause-item">Social isolation and belonging issues</div>
+              <div class="cause-item">Course-career misalignment</div>
+            </div>
+          </div>
+          <div class="stage-info-card fade-up">
+            <h4 style="font-weight:700;margin-bottom:.5rem">✅ Solutions</h4>
+            <div class="solutions-list">
+              <div class="solution-item"><span class="solution-icon">✅</span> Student success centers and peer mentoring</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Income-based loan repayment</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Part-time and hybrid study options</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> Industry internship and placement support</div>
+              <div class="solution-item"><span class="solution-icon">✅</span> AI-powered academic advisor chatbot</div>
+            </div>
+          </div>
+        </div>
+        <div class="stage-chart-container fade-up">
+          <h3>📉 Higher Education Dropout Trend (2019–2024)</h3>
+          <div style="height:280px"><canvas id="chart-higher-edu"></canvas></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+            <div style="background:rgba(139,92,246,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(139,92,246,.15)"><div style="font-size:1.8rem;font-weight:900;color:#8b5cf6">14.1%</div><div style="font-size:.78rem;color:var(--text-muted)">Current Rate</div></div>
+            <div style="background:rgba(26,86,219,.06);border-radius:12px;padding:1rem;text-align:center;border:1px solid rgba(26,86,219,.15)"><div style="font-size:1.8rem;font-weight:900;color:#1a56db">↓23%</div><div style="font-size:.78rem;color:var(--text-muted)">5-Year Reduction</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="solutions-section" id="solutions">
+  <div class="container">
+    <div class="solutions-header">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Actionable Solutions to <span class="text-gradient">Prevent Dropouts</span></h2>
+      <p class="section-subtitle" style="margin:0 auto">Our multi-pronged approach addresses every layer of the dropout crisis.</p>
+    </div>
+    <div class="solutions-grid">
+      <div class="solution-card fade-up"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1a56db,#0ea5e9)"></div><div class="sol-icon" style="background:rgba(26,86,219,.1)">📡</div><h3 class="sol-title">Early Warning System</h3><p class="sol-desc">Automated alerts when attendance drops, grades fall, or engagement patterns signal risk.</p></div>
+      <div class="solution-card fade-up"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#10b981,#06b6d4)"></div><div class="sol-icon" style="background:rgba(16,185,129,.1)">🤝</div><h3 class="sol-title">One-on-One Mentoring</h3><p class="sol-desc">Matching at-risk students with trained mentors for academic and emotional support.</p></div>
+      <div class="solution-card fade-up"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#f59e0b,#ef4444)"></div><div class="sol-icon" style="background:rgba(245,158,11,.1)">💰</div><h3 class="sol-title">Scholarship Management</h3><p class="sol-desc">Centralized scholarship database with eligibility screening and application tracking.</p></div>
+      <div class="solution-card fade-up"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#8b5cf6,#ec4899)"></div><div class="sol-icon" style="background:rgba(139,92,246,.1)">📊</div><h3 class="sol-title">Analytics Dashboard</h3><p class="sol-desc">Role-based dashboards for instant visibility into dropout trends and intervention ROI.</p></div>
+      <div class="solution-card fade-up"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#06b6d4,#1a56db)"></div><div class="sol-icon" style="background:rgba(6,182,212,.1)">📚</div><h3 class="sol-title">Resource Library</h3><p class="sol-desc">Curated study materials, counseling guides, and mental health resources in one portal.</p></div>
+      <div class="solution-card fade-up"><div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#ef4444,#f59e0b)"></div><div class="sol-icon" style="background:rgba(239,68,68,.1)">☁️</div><h3 class="sol-title">Cloud File Storage</h3><p class="sol-desc">Reports and documents securely stored on Google Cloud with role-gated access.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGIN PORTALS -->
+<section class="login-section" id="login">
+  <div class="container">
+    <div class="login-header">
+      <div class="section-label">Secure Access</div>
+      <h2 class="section-title">Choose Your <span class="text-gradient">Portal</span></h2>
+      <p class="section-subtitle" style="margin:0 auto">Role-based access ensures every user sees what they need.</p>
+    </div>
+    <div class="login-cards">
+      <div class="login-card fade-up">
+        <div class="lc-header" style="background:linear-gradient(135deg,#1a56db,#0ea5e9)">
+          <div class="lc-icon">🎓</div>
+          <h3 class="lc-title">Student Portal</h3>
+          <p class="lc-desc">Access your dashboard, resources, and progress tracking</p>
+        </div>
+        <div class="lc-body">
+          <div class="lc-features">
+            <div class="lc-feat">📈 Academic progress tracker</div>
+            <div class="lc-feat">📚 Personalized resource library</div>
+            <div class="lc-feat">🤝 Counseling appointment booking</div>
+            <div class="lc-feat">💰 Scholarship opportunities</div>
+            <div class="lc-feat">🔔 Important notifications</div>
+          </div>
+          <a class="btn btn-primary" href="student_login.html" style="width:100%;justify-content:center">Sign In as Student →</a>
+        </div>
+      </div>
+      <div class="login-card fade-up">
+        <div class="lc-header" style="background:linear-gradient(135deg,#1e2536,#2d3748)">
+          <div class="lc-icon">📊</div>
+          <h3 class="lc-title">Admin / Mentor Portal</h3>
+          <p class="lc-desc">Manage records, analyze data, and upload reports</p>
+        </div>
+        <div class="lc-body">
+          <div class="lc-features">
+            <div class="lc-feat">👥 Student record management</div>
+            <div class="lc-feat">📉 Dropout analytics & trends</div>
+            <div class="lc-feat">📤 Upload reports to Cloud</div>
+            <div class="lc-feat">⚠️ At-risk student alerts</div>
+            <div class="lc-feat">📋 Intervention management</div>
+          </div>
+          <a class="btn btn-primary" href="admin_login.html" style="width:100%;justify-content:center;background:linear-gradient(135deg,#1e2536,#374151)">Sign In as Admin →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div class="container cta-content">
+    <div class="section-label" style="justify-content:center">🚀 Join the Mission</div>
+    <h2 class="cta-title">Ready to Reduce Dropout Rates<br/>at Your Institution?</h2>
+    <p class="cta-desc">Join 340+ schools already using SDMS to track, support, and retain students.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-white btn-lg" href="admin_login.html">Get Started Free</a>
+      <a class="btn btn-ghost btn-lg" href="#solutions">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="navbar-brand" style="margin-bottom:1rem"><div class="brand-logo">🎓</div><span class="brand-name" style="color:#fff">SD<span>MS</span></span></div>
+        <p class="footer-brand-desc">Student Dropout Management System — a data-driven platform helping India reduce dropout rates through technology, counseling, and early intervention.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <div class="footer-links">
+          <a class="footer-link" href="#stages">Education Stages</a>
+          <a class="footer-link" href="#solutions">Solutions</a>
+          <a class="footer-link" href="#login">Portals</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Portals</div>
+        <div class="footer-links">
+          <a class="footer-link" href="student_login.html">Student Login</a>
+          <a class="footer-link" href="admin_login.html">Admin Login</a>
+          <a class="footer-link" href="student_dashboard.html">Student Dashboard</a>
+          <a class="footer-link" href="admin_dashboard.html">Admin Dashboard</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Technology</div>
+        <div class="footer-links">
+          <span class="footer-link">Flask (Python)</span>
+          <span class="footer-link">MySQL Database</span>
+          <span class="footer-link">Google Cloud Storage</span>
+          <span class="footer-link">Chart.js Analytics</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Student Dropout Management System. All rights reserved.</span>
+      <span>Built with ❤️ to keep every student in school.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="chart.js"></script>
+</body>
+</html>
